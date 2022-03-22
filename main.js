@@ -1,6 +1,5 @@
-import { assert } from "https://deno.land/std/testing/asserts.ts";
 import { basename } from "https://deno.land/std@0.130.0/path/mod.ts";
-import { join } from "https://deno.land/std@0.126.0/path/mod.ts";
+import { join } from "https://deno.land/std@0.130.0/path/mod.ts";
 
 if(!Deno.args.length){
     console.log("$ denobundle dir");
@@ -29,6 +28,7 @@ await f.write(new TextEncoder().encode(`var m = {};\n`));
 var l = Object.keys(m);
 for(var i=0;i<l.length;i++){
     var k = l[i].replace(Deno.args[0], basename(Deno.args[0]))
+    console.log(k);
     await f.write(new TextEncoder().encode(`m["${k}"] = new Uint8Array([`));
     var b = await Deno.readFile(m[l[i]]);
     for (var j = 0; j < b.length; j++) {
